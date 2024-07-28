@@ -1,6 +1,6 @@
 {
   "name": "@env-hopper/source",
-  "version": "0.0.5",
+  "version": "0.0.0-semantically-released",
   "license": "MIT",
   "scripts": {
     "backend:serve": "nx run backend:serve",
