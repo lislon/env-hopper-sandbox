@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-
 env:
   REGISTRY: lislon
   IMAGE_NAME: ${{ github.repository }}
@@ -32,12 +31,11 @@ jobs:
         id: get-next-version
         run: npx semantic-release --dry-run
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     outputs:
       new-release-published: ${{ steps.get-next-version.outputs.new-release-published }}
       new-release-version: ${{ steps.get-next-version.outputs.new-release-version }}
       new-release-git-tag: ${{ steps.get-next-version.outputs.new-release-git-tag }}
-
 
   push:
     needs: build
@@ -90,4 +88,4 @@ jobs:
       - run: npm ci
       - run: npx semantic-release
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
