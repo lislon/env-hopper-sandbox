@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       actions: read
-      contents: read
+      contents: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -29,17 +29,16 @@ jobs:
 
       # Cache node_modules
       - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
       - run: npm ci
       - uses: nrwl/nx-set-shas@v4
 
       # Prepend any command with "nx-cloud record --" to record its logs to Nx Cloud
       - run: npx nx-cloud record -- echo Hello World
       - run: npx nx affected --base=origin/main --head=HEAD -t lint test build
-
-      #- run: npx nx run-many -t lint test build -p backend frontend
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release
   push_to_registry:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
@@ -51,14 +50,6 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 20
-          cache: 'npm'
-      - name: Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx semantic-release
       - name: Log into ghcr.io
         uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
         with:
