@@ -51,7 +51,7 @@ jobs:
           context: .
 
       - name: Attest image
-        uses: actions/attest-build-provenance@${{ github.ref_name }}
+        uses: actions/attest-build-provenance@v1.0.0
         with:
           subject-name: ghcr.io/${{ github.repository }}
           subject-digest: ${{ steps.push-step.outputs.digest }}
