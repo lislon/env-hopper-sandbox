@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  pull_request:
 env:
   REGISTRY: lislon
   IMAGE_NAME: ${{ github.repository }}
@@ -39,7 +40,10 @@ jobs:
 
   push:
     needs: build
-    if: needs.build.outputs.new-release-published == 'true'
+    if:
+      ${{ needs.build.outputs.new-release-published == 'true' &&
+      contains('refs/heads/main,refs/heads/beta,refs/heads/alpha', github.ref)
+      && github.event_name == 'push' }}
     runs-on: ubuntu-latest
     permissions:
       packages: write
