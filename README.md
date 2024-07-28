@@ -27,6 +27,7 @@ Navigate to `http://localhost:4001`
 
 ### Migration
 
+
 Change schema in `schema.prisma` and then run
 
 ```bash
