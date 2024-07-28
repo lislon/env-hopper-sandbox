@@ -34,6 +34,10 @@ jobs:
         run: npx semantic-release --dry-run
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+    outputs:
+      new-release-published: ${{ steps.get-next-version.outputs.new-release-published }}
+      new-release-version: ${{ steps.get-next-version.outputs.new-release-version }}
+      new-release-git-tag: ${{ steps.get-next-version.outputs.new-release-git-tag }}
   push:
     needs: build
     runs-on: ubuntu-latest
@@ -59,7 +63,7 @@ jobs:
         uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
         with:
           push: true
-          tags: ghcr.io/${{ github.repository }}:v${{ needs.main.outputs.new-release-version }}
+          tags: ghcr.io/${{ github.repository }}:v${{ needs.main.outputs.new-release-version }},latest
           context: .
 
       - name: Attest image
