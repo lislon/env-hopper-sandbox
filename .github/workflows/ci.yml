@@ -31,5 +31,5 @@ jobs:
       - run: npx nx affected --base=origin/main --head=HEAD -t lint test build
       - name: Release tag
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: npx semantic-release
