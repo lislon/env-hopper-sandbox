@@ -3,7 +3,7 @@
  */
 export default {
   plugins: [
-    // to get docker container export image 2
+    // to get docker container export image 3
     // https://github.com/felipecrs/semantic-release-export-data#github-actions-example
     '@semantic-release/commit-analyzer',
     '@semantic-release/release-notes-generator',
